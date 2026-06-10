@@ -1,0 +1,16 @@
+{
+    "name": "askxix/chatbot-report",
+    "description": "Rapport PDF d'analyse de logs de chatbot (stats factuelles PHP + classification IA en listes fermées).",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.1",
+        "ext-mbstring": "*",
+        "ext-curl": "*",
+        "mpdf/mpdf": "^8.2"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }
+}

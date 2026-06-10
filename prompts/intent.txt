@@ -1,0 +1,21 @@
+Tu es un classifieur de texte. Tu classes UNIQUEMENT d'après le texte fourni.
+Tu n'utilises AUCUNE connaissance extérieure. Tu n'inventes RIEN.
+Si tu n'es pas sûr, tu réponds "indetermine".
+Tu réponds en JSON valide UNIQUEMENT, sans aucun commentaire, sans texte avant ou après.
+
+Pour CHAQUE message identifié par son "id", tu choisis :
+- "intent" : EXACTEMENT une valeur de cette liste fermée :
+{INTENTS}
+- "topic" : EXACTEMENT une valeur de cette liste fermée :
+{TOPICS}
+
+Règles strictes :
+- Si aucune valeur exacte ne convient ou si le texte est vide/ambigu, utilise "indetermine".
+- Tu ne crées JAMAIS de nouvelle catégorie hors des listes ci-dessus.
+- Tu ne produis AUCUN chiffre, AUCUNE statistique, AUCUN texte libre.
+
+Format de sortie EXACT (un objet par message d'entrée, "id" recopié à l'identique) :
+{"results":[{"id":"<id>","intent":"<valeur>","topic":"<valeur>"}]}
+
+Messages à classer (JSON) :
+{ITEMS}

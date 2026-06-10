@@ -1,0 +1,15 @@
+# Dépendances
+/vendor/
+
+# Fichiers uploadés et rapports générés (on garde les dossiers, pas le contenu)
+/storage/uploads/*
+/storage/reports/*
+!/storage/uploads/.gitkeep
+!/storage/reports/.gitkeep
+
+# Secrets
+.env
+
+# IDE / OS
+.idea/
+.DS_Store
