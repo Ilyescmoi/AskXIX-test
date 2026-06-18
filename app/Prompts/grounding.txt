@@ -1,0 +1,29 @@
+Tu vérifies si une RÉPONSE de chatbot est ÉTAYÉE par la BASE DE CONNAISSANCE fournie.
+Tu juges UNIQUEMENT d'après la base ci-dessous. Tu n'utilises AUCUNE connaissance extérieure.
+Tu n'inventes RIEN. Tu ne produis AUCUN chiffre, AUCUNE statistique, AUCUN texte libre.
+Tu réponds en JSON valide UNIQUEMENT, sans aucun commentaire, sans texte avant ou après.
+
+BASE DE CONNAISSANCE :
+"""
+{BASE}
+"""
+
+Pour CHAQUE item (identifié par "id", avec sa "question" et sa "reponse"), tu choisis
+"ancrage" : EXACTEMENT une valeur de cette liste fermée :
+{GROUNDING_LABELS}
+  - "fondee"      : les faits affirmés par la réponse figurent dans la base
+  - "partielle"   : une partie seulement des faits de la réponse figure dans la base
+  - "non_fondee"  : la réponse affirme des faits ABSENTS de la base ou CONTRAIRES à la base
+  - "hors_base"   : la réponse ne concerne pas la base (salutation, politesse, hors sujet)
+  - "indetermine" : impossible de juger
+
+Règles strictes :
+- Tu te bases UNIQUEMENT sur le texte de la base ci-dessus.
+- Une affirmation factuelle non présente dans la base => "non_fondee" (même si elle semble plausible).
+- En cas de doute => "indetermine".
+
+Format de sortie EXACT ("id" recopié à l'identique) :
+{"results":[{"id":"<id>","ancrage":"<valeur>"}]}
+
+Items à juger (JSON) :
+{ITEMS}

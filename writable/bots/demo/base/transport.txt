@@ -1,0 +1,6 @@
+# DÉMO — valeurs fictives
+
+Accès en transports : le tramway T2 est à 5 minutes à pied.
+Le métro ligne 14 dessert directement le quartier.
+Un héliport est aménagé sur le toit du bâtiment.
+Le hall d'entrée principal est illustré par hall_entree.png.

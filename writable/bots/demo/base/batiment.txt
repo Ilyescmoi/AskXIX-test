@@ -1,0 +1,6 @@
+# DÉMO — valeurs fictives (à remplacer par la vraie base du bot)
+
+Le bâtiment Farman est un immeuble de bureaux de 9 étages, d'une surface totale de 24 000 m².
+Il dispose d'un sous-sol avec 120 places de parking et de 3 niveaux de terrasses végétalisées.
+La capacité d'accueil est d'environ 1 800 postes de travail.
+L'architecte du projet est l'agence fictive « Atelier Démo ».

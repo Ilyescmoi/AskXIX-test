@@ -1,0 +1,7 @@
+# DÉMO — valeurs fictives
+
+Le bâtiment propose plusieurs services : un café, un restaurant inter-entreprises,
+une crèche, une salle de sport et des jardins partagés.
+Le café est ouvert du lundi au vendredi, de 8h à 18h.
+Une perspective du café est disponible : vue_cafe.jpg.
+Une vue des jardins partagés est disponible : perspective_jardin.jpg.
