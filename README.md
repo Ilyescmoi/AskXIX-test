@@ -12,6 +12,8 @@ Vous lui fournissez **les conversations d'un bot** (un fichier CSV) et **sa base
 
 > ℹ️ L'outil **n'a pas d'interface graphique**. On déclenche une analyse en **ouvrant une URL** dans le navigateur. La page d'accueil affiche encore le gabarit CodeIgniter par défaut, c'est normal.
 
+> 📖 **Doc développeur en ligne** : une fois le serveur lancé, ouvre **http://localhost:8787/docs** — endpoints, paramètres, format CSV, codes d'erreur et exemples curl / JS / Python / PHP, avec l'URL de base et la clé pré-remplies.
+
 ---
 
 ## Sommaire
