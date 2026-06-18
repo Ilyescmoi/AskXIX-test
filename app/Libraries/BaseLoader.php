@@ -80,7 +80,7 @@ class BaseLoader
             $sha = (string) hash_file('sha256', $path);
 
             if (in_array($ext, $textExt, true)) {
-                $txt = $this->cleanText((string) @file_get_contents($path));
+                $txt = Text::clean((string) @file_get_contents($path));
                 $context .= "\n\n### " . $rel . "\n" . $txt;
                 $docCount++;
                 $files[] = ['path' => $rel, 'bytes' => $size, 'sha256' => $sha, 'kind' => 'text'];
@@ -124,16 +124,4 @@ class BaseLoader
         return Text::stripAccents(strtolower(trim($name)));
     }
 
-    /**
-     * Assainit un texte source : remplace les séquences UTF-8 invalides (sinon
-     * preg/htmlspecialchars videraient tout le champ en silence) et neutralise
-     * les caractères de contrôle. Même esprit que CsvLoader::cleanText().
-     */
-    private function cleanText(string $s): string
-    {
-        if ($s !== '' && !mb_check_encoding($s, 'UTF-8')) {
-            $s = mb_convert_encoding($s, 'UTF-8', 'UTF-8');
-        }
-        return (string) preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/', ' ', $s);
-    }
 }

@@ -90,7 +90,6 @@ class Verifier extends BaseConfig
         'subtitle' => 'Fidélité des réponses du chatbot à sa base de connaissance',
         'top_n'    => 10,
         'best_n'   => 5,
-        'locale'   => 'fr_FR',
     ];
 
     /** Traçabilité / document d'audit. @var array<string,mixed> */
@@ -131,7 +130,6 @@ class Verifier extends BaseConfig
         'max_total_bytes'      => 50 * 1024 * 1024,   // borne de sécurité du dossier base
         'context_chars'        => 14000,              // taille max de la base injectée dans le prompt (toute la base, tronquée si énorme)
         'grounding_batch_size' => 12,                 // réponses jugées par appel (base + N réponses)
-        'excerpt_chars'        => 600,                // extrait de base affiché pour une réponse non fondée
     ];
 
     /**

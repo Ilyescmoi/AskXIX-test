@@ -109,4 +109,28 @@ class Text
         $rest = count($ids) - $shownCount;
         return implode(', ', $parts) . ($rest > 0 ? ' … (+' . $rest . ' autres)' : '');
     }
+
+    /**
+     * Neutralise les octets non-UTF-8 et les caractères de contrôle (hors tab/CR/LF).
+     * Le texte n'est jamais vidé en silence : les octets invalides deviennent le
+     * caractère de substitution mbstring, les caractères de contrôle un espace.
+     */
+    public static function clean(string $s): string
+    {
+        if ($s !== '' && !mb_check_encoding($s, 'UTF-8')) {
+            $s = mb_convert_encoding($s, 'UTF-8', 'UTF-8');
+        }
+        return (string) preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/', ' ', $s);
+    }
+
+    /**
+     * Libellé lisible d'une clé technique via la table de libellés configurée.
+     * Repli : la clé mise en forme (underscores → espaces, capitalisée).
+     *
+     * @param array<string,array<string,string>> $labels la table $config['labels']
+     */
+    public static function label(array $labels, string $group, string $key): string
+    {
+        return $labels[$group][$key] ?? ucfirst(str_replace('_', ' ', $key));
+    }
 }

@@ -202,7 +202,7 @@ class CsvLoader
             if ($i === null || !array_key_exists($i, $record) || $record[$i] === null) {
                 return '';
             }
-            return $this->cleanText(trim((string) $record[$i]));
+            return Text::clean(trim((string) $record[$i]));
         };
 
         $dateRaw = $get($colIndex['date']);
@@ -218,23 +218,6 @@ class CsvLoader
             'reponse'       => $get($colIndex['reponse']),
             'erreur'        => $get($colIndex['erreur']),
         ];
-    }
-
-    /**
-     * Assainit un texte source : remplace les séquences UTF-8 invalides (au lieu de
-     * laisser preg_replace/htmlspecialchars vider TOUT le champ en aval — la
-     * traçabilité exige de ne jamais perdre un texte en silence) et neutralise les
-     * caractères de contrôle (sauf tab/saut de ligne, compactés plus loin).
-     */
-    private function cleanText(string $s): string
-    {
-        if ($s !== '' && !mb_check_encoding($s, 'UTF-8')) {
-            // Les octets invalides deviennent le caractère de substitution mbstring
-            // ('?' par défaut, ou U+FFFD selon mbstring.substitute_character) — le
-            // texte reste présent, jamais vidé en silence.
-            $s = mb_convert_encoding($s, 'UTF-8', 'UTF-8');
-        }
-        return (string) preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/', ' ', $s);
     }
 
     /**

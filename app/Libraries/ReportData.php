@@ -200,7 +200,7 @@ class ReportData
             }
             $out[] = [
                 'key'     => $key,
-                'name'    => $this->labelFor($group, $key),
+                'name'    => Text::label($this->config['labels'],$group, $key),
                 'count'   => $count,
                 'percent' => round(100 * $count / $total, 1),
                 'ids'     => $idsByLabel[$key],
@@ -242,7 +242,7 @@ class ReportData
         foreach ($perTopic as $key => $d) {
             $out[] = [
                 'key'           => $key,
-                'name'          => $this->labelFor('topics', $key),
+                'name'          => Text::label($this->config['labels'],'topics', $key),
                 'count'         => $d['count'],
                 'no_answer'     => $d['no_answer'],
                 'rate'          => $d['count'] > 0 ? round(100 * $d['no_answer'] / $d['count'], 1) : 0.0,
@@ -410,7 +410,7 @@ class ReportData
                 $groups[$key] = [
                     'question' => $q,
                     'count'    => 0,
-                    'topic'    => $this->labelFor('topics', $labels[$r['id']]['topic'] ?? 'indetermine'),
+                    'topic'    => Text::label($this->config['labels'],'topics', $labels[$r['id']]['topic'] ?? 'indetermine'),
                     'ids'      => [],
                 ];
             }
@@ -447,7 +447,7 @@ class ReportData
                 'id'       => (int) $id,
                 'question' => $q,
                 'reponse'  => trim((string) $byId[$id]['reponse']),
-                'topic'    => $this->labelFor('topics', $labels[$id]['topic'] ?? 'indetermine'),
+                'topic'    => Text::label($this->config['labels'],'topics', $labels[$id]['topic'] ?? 'indetermine'),
                 'regle'    => $nonResponse['reasons'][$id] ?? '',
                 'date'     => (string) $byId[$id]['date_raw'],
             ];
@@ -532,13 +532,6 @@ class ReportData
     private function isCatchAll(string $key): bool
     {
         return in_array($key, ['autre', 'indetermine'], true);
-    }
-
-    /** Traduit une clé technique en libellé lisible via config['labels']. */
-    private function labelFor(string $group, string $key): string
-    {
-        $map = $this->config['labels'][$group] ?? [];
-        return $map[$key] ?? ucfirst(str_replace('_', ' ', $key));
     }
 
     /**

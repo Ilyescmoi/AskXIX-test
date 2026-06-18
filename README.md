@@ -223,6 +223,30 @@ meta-<token>.json          # résumé machine de l'exécution
 
 Le `<token>` est un horodatage (`AAAAMMJJ-HHMMSS`), donc chaque analyse crée de nouveaux fichiers sans écraser les précédents.
 
+#### Récupérer l'audit et le CSV par URL
+
+L'appel `/rapport/<bot>` ne renvoie que le **rapport** PDF. Pour récupérer l'**audit** ou le **CSV** du dernier run (sans tout régénérer) :
+
+```
+http://localhost:8787/telecharger/<bot>/<type>?key=<clé>
+```
+
+| `type` | Document servi |
+|---|---|
+| `rapport` | dernier `rapport-*.pdf` |
+| `audit` | dernier `audit-*.pdf` |
+| `csv` | dernier `tracabilite-*.csv` |
+
+```bash
+# l'audit du dernier rapport généré pour « demo »
+http://localhost:8787/telecharger/demo/audit?key=demo-key
+
+# le CSV de traçabilité
+http://localhost:8787/telecharger/demo/csv?key=demo-key
+```
+
+> En mode JSON (`format=json`), la réponse de `/rapport/<bot>` contient déjà un bloc `download` avec ces chemins.
+
 **Indicateurs de fidélité** (présents si une `base/` existe) :
 
 | Étiquette | Signification |

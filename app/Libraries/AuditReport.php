@@ -65,9 +65,9 @@ class AuditReport
                 'intent_key'    => $labels[$id]['intent'] ?? 'indetermine',
                 'topic_key'     => $labels[$id]['topic'] ?? 'indetermine',
                 'quality_key'   => $quality[$id]['quality'] ?? 'indetermine',
-                'intent'        => $this->label('intents', $labels[$id]['intent'] ?? 'indetermine'),
-                'topic'         => $this->label('topics', $labels[$id]['topic'] ?? 'indetermine'),
-                'quality'       => $this->label('quality', $quality[$id]['quality'] ?? 'indetermine'),
+                'intent'        => Text::label($this->config['labels'],'intents', $labels[$id]['intent'] ?? 'indetermine'),
+                'topic'         => Text::label($this->config['labels'],'topics', $labels[$id]['topic'] ?? 'indetermine'),
+                'quality'       => Text::label($this->config['labels'],'quality', $quality[$id]['quality'] ?? 'indetermine'),
                 'hallucination' => !empty($quality[$id]['hallucination']),
                 'lot_c'         => $provC['lot'] ?? null,
                 'lot_q'         => $provQ['lot'] ?? null,
@@ -77,7 +77,7 @@ class AuditReport
                 'brut_q'        => $provQ['brut'] ?? '',
                 // --- Fidélité à la base ---
                 'ancrage_key'     => $ancrageKey,
-                'ancrage'         => $ancrageKey !== '' ? $this->label('grounding', $ancrageKey) : '',
+                'ancrage'         => $ancrageKey !== '' ? Text::label($this->config['labels'],'grounding', $ancrageKey) : '',
                 'lot_a'           => $provA['lot'] ?? null,
                 'statut_a'        => $provA['statut'] ?? '',
                 'brut_a'          => $provA['brut'] ?? '',
@@ -508,7 +508,7 @@ class AuditReport
         $legend = [];
         foreach (['intents', 'topics', 'quality'] as $group) {
             foreach ($codes[$group] ?? [] as $key => $code) {
-                $legend[$group][$code] = $this->label($group, $key);
+                $legend[$group][$code] = Text::label($this->config['labels'],$group, $key);
             }
         }
         $legend['nr'] = ['—' => 'Vraie réponse', 'V' => 'Réponse vide', 'C' => 'Trop courte', 'F' => 'Formule de repli'];
@@ -594,8 +594,4 @@ class AuditReport
         return trim((string) preg_replace('/\s+/u', ' ', $s));
     }
 
-    private function label(string $group, string $key): string
-    {
-        return $this->config['labels'][$group][$key] ?? ucfirst(str_replace('_', ' ', $key));
-    }
 }

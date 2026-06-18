@@ -157,6 +157,11 @@ class ReportController extends BaseController
                 'audit'   => "audit-{$token}.pdf",
                 'csv'     => "tracabilite-{$token}.csv",
             ],
+            'download'           => [
+                'rapport' => "telecharger/{$botId}/rapport",
+                'audit'   => "telecharger/{$botId}/audit",
+                'csv'     => "telecharger/{$botId}/csv",
+            ],
         ];
         if (isset($data['grounding'])) {
             foreach ($data['grounding'] as $g) {
@@ -170,6 +175,41 @@ class ReportController extends BaseController
         }
         return $this->response->download($outDir . '/rapport-' . $token . '.pdf', null)
             ->setFileName("rapport-{$botId}-{$token}.pdf");
+    }
+
+    /**
+     * Télécharge le dernier document généré pour un bot, sans régénérer.
+     *
+     * @param string $bot  identifiant du bot
+     * @param string $type rapport | audit | csv
+     */
+    public function download(string $bot, string $type)
+    {
+        $botId = $this->safeBot($bot);
+        $map = [
+            'rapport' => ['rapport-', '.pdf'],
+            'audit'   => ['audit-', '.pdf'],
+            'csv'     => ['tracabilite-', '.csv'],
+            'trace'   => ['tracabilite-', '.csv'],
+        ];
+        $key = strtolower($type);
+        if ($botId === '' || ! isset($map[$key])) {
+            return $this->response->setStatusCode(404)
+                ->setJSON(['error' => 'Document inconnu. Types disponibles : rapport, audit, csv.']);
+        }
+
+        [$prefix, $ext] = $map[$key];
+        $files = glob(WRITEPATH . 'reports/' . $botId . '/' . $prefix . '*' . $ext);
+        if ($files === false || $files === []) {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => "Aucun document « {$key} » pour « {$botId} ». Génère d'abord un rapport via /rapport/{$botId}.",
+            ]);
+        }
+
+        sort($files); // le token est horodaté (AAAAMMJJ-HHMMSS) → ordre chronologique
+        $latest = (string) end($files);
+
+        return $this->response->download($latest, null)->setFileName(basename($latest));
     }
 
     /**
