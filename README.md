@@ -35,7 +35,7 @@ Vous lui fournissez **les conversations d'un bot** (un fichier CSV) et **sa base
 
 - **PHP ≥ 8.2** (testé sur 8.4). Vérifiez : `php --version`
 - Les extensions CI4 habituelles (`intl`, `mbstring`, `json`, etc.).
-- Les dépendances sont déjà installées dans `vendor/`. Si besoin de les réinstaller : `composer install`.
+- **Dépendances Composer** (CodeIgniter 4, mPDF…). Le dossier `vendor/` n'est **pas** versionné (il est dans `.gitignore`) : après un `git clone`, lancez **`composer install`** à la racine **avant** de démarrer. Sans cette étape, des classes comme `Mpdf\Mpdf` resteront introuvables. Si `vendor/` est déjà présent, c'est inutile.
 
 ---
 
@@ -291,6 +291,7 @@ LLM_API_KEY  = '...'
 
 | Symptôme | Cause | Solution |
 |---|---|---|
+| `Class "Mpdf\Mpdf" not found` (ou autre classe `vendor/`) | dépendances Composer non installées | Lancez **`composer install`** à la racine — `vendor/` n'est pas versionné (voir [§1](#1-prérequis)) |
 | « Site inaccessible » sur `127.0.0.1` | serveur en IPv6 uniquement | Utilisez **`http://localhost:8787`** (ou `--host 0.0.0.0`) |
 | `401 Clé API invalide ou absente` | clé manquante/incorrecte | Ajoutez `?key=demo-key` à l'URL |
 | `404 Bot inconnu` | dossier `writable/bots/<nom>/` absent | Créez le dossier du bot |
